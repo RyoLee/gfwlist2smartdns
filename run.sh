@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+echoerr() { echo "$@" 1>&2; }
 while getopts 'o:' OPT; do
   case $OPT in
     o) O_PATH="$OPTARG";;
-    *) echo "Unknown error while processing options";;
+    *) echoerr "Unknown error while processing options";;
   esac
 done
 curl -sS https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt | \
