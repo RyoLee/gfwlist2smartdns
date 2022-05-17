@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 while getopts 'o:' OPT; do
   case $OPT in
-    o) O_PATH="$OPTARG"&&MODE="file";;
+    o) O_PATH="$OPTARG";;
     *) echo "Unknown error while processing options";;
   esac
 done
