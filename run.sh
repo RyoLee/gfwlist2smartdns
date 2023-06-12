@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 echoerr() { echo "$@" 1>&2; }
-while getopts 'o:' OPT; do
+while getopts 'g:o:' OPT; do
   case $OPT in
+    g) G_NAME="$OPTARG";;
     o) O_PATH="$OPTARG";;
     *) echoerr "Unknown error while processing options";;
   esac
@@ -20,7 +21,11 @@ curl -sS https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/v2ra
 cat /tmp/temp_gfwlist1 /tmp/temp_gfwlist2 /tmp/temp_gfwlist3 | sort -u | sed 's/^\.*//g' > /tmp/temp_gfwlist
 cat /tmp/temp_gfwlist | sed 's/^/\./g' > /tmp/gfw.conf
 sed -i 's/^/nameserver \//' /tmp/gfw.conf
-sed -i 's/$/\/GFW/' /tmp/gfw.conf
+if [ -z $G_NAME ];then
+  sed -i 's/$/\/GFW/' /tmp/gfw.conf
+else
+  sed -i "s/$/\/${G_NAME}/" /tmp/gfw.conf
+fi
 if [ -z $O_PATH ];then
   cat /tmp/gfw.conf 
 else
